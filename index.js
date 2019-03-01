@@ -102,7 +102,7 @@ module.exports = function(options) {
 			}
 		};
 
-		request(queryURL('CreateQueue', '/', Object.assign({QueueName:name},options.attributes), function(err) {
+		request(queryURL('CreateQueue', '/', Object.assign({QueueName:name},options.attributes)), function(err) {
 			if (err) return onresult(err);
 			request(queryURL('GetQueueUrl', '/', {QueueName:name}), function(err, res) {
 				if (err || res.statusCode !== 200) {
