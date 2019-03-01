@@ -36,6 +36,7 @@ module.exports = function(options) {
 	options.region = options.region || process.env.SQS_REGION || process.env.AWS_REGION || DEFAULT_REGION;
 	options.raw = options.raw || false;
 	options.proxy = options.proxy || false;
+	options.attributes = options.attributes || {};
 
 	if (!options.access || !options.secret) throw new Error('options.access and options.secret are required');
 
@@ -101,7 +102,7 @@ module.exports = function(options) {
 			}
 		};
 
-		request(queryURL('CreateQueue', '/', {QueueName:name}), function(err) {
+		request(queryURL('CreateQueue', '/', Object.assign({QueueName:name},options.attributes), function(err) {
 			if (err) return onresult(err);
 			request(queryURL('GetQueueUrl', '/', {QueueName:name}), function(err, res) {
 				if (err || res.statusCode !== 200) {
