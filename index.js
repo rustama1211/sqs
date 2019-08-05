@@ -68,7 +68,7 @@ module.exports = function(options) {
 	var retry = function(req, url, callback) {
 		var retries = 0;
 		var action = function() {
-			req(url, {timeout:10000}, function(err, res) {
+			req(url, {timeout:0}, function(err, res) {
 				if (!err && res.statusCode >= 500) err = new Error('invalid status-code: '+res.statusCode);
 				if (callback) return callback(err);
 				if (!err) return;
